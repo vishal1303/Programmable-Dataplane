@@ -1,0 +1,80 @@
+{
+  "target": "bmv2",
+  "p4info": "build/mac_forwarding.p4.p4info.txt",
+  "bmv2_json": "build/mac_forwarding.json",
+  "table_entries": [
+    {
+      "table": "fwd_table",
+      "default_action": true,
+      "action_name": "MyIngress.broadcast",
+      "action_params": { }
+    },
+    {
+      "table": "MyIngress.fwd_table",
+      "match": {
+        "hdr.ethernet.dstAddr": "FF:FF:FF:FF:FF:FF"
+      },
+      "action_name": "MyIngress.broadcast",
+      "action_params": { }
+    },
+    {
+      "table": "MyIngress.fwd_table",
+      "match": {
+        "hdr.ethernet.dstAddr": "08:00:00:00:01:11"
+      },
+      "action_name": "MyIngress.mac_forward",
+      "action_params": {
+        "egress_port": 3
+      }
+    },
+    {
+      "table": "MyIngress.fwd_table",
+      "match": {
+        "hdr.ethernet.dstAddr": "08:00:00:00:02:22"
+      },
+      "action_name": "MyIngress.mac_forward",
+      "action_params": {
+        "egress_port": 4
+      }
+    },
+    {
+      "table": "MyIngress.fwd_table",
+      "match": {
+        "hdr.ethernet.dstAddr": "08:00:00:00:03:33"
+      },
+      "action_name": "MyIngress.mac_forward",
+      "action_params": {
+        "egress_port": 1
+      }
+    },
+    {
+      "table": "MyIngress.fwd_table",
+      "match": {
+        "hdr.ethernet.dstAddr": "08:00:00:00:04:44"
+      },
+      "action_name": "MyIngress.mac_forward",
+      "action_params": {
+        "egress_port": 2
+      }
+    }
+  ],
+  "multicast_group_entries" : [
+    {
+      "multicast_group_id" : 1,
+      "replicas" : [
+        {
+          "egress_port" : 1,
+          "instance" : 1
+        },
+        {
+          "egress_port" : 2,
+          "instance" : 1
+        },
+        {
+          "egress_port" : 4,
+          "instance" : 1
+        }
+      ]
+    }
+  ]
+}
