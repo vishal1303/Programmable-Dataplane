@@ -2,7 +2,7 @@
 
 In this example we implement L2 forwarding in P4. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
 
-![pod-topo](https://github.com/vishal1303/tutorials/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
+![pod-topo](https://github.com/vishal1303/Programmable-DataPlane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
 
 ## Using mininet hosts
 
