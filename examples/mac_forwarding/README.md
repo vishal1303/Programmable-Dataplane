@@ -1,6 +1,6 @@
 # MAC Forwarding
 
-In this example we implement L2 forwarding in P4. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
+In this example we implement L2 forwarding in P4 using mac addresses. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
 
 ![pod-topo](https://github.com/vishal1303/Programmable-DataPlane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
 
@@ -22,4 +22,6 @@ In this example we implement L2 forwarding in P4. The hosts can either be minine
 
 4. [For linux VMs] Configure the IP address and ARP entries in each VM according to the respective commands for hosts mentioned in file `pod-topo/topology-with-hosts.json`
 
-4. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
+5. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
+
+**Tip:** To add new formats for match field entries, look into /home/vshrivastav/Programmable-DataPlane/utils/p4runtime_lib/convert.py

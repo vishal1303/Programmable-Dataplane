@@ -22,6 +22,7 @@ This package contains several helper functions for encoding to and decoding from
 - integers
 - IPv4 address strings
 - Ethernet address strings
+- Twizzler object id strings
 '''
 
 mac_pattern = re.compile('^([\da-fA-F]{2}:){5}([\da-fA-F]{2})$')
@@ -43,6 +44,16 @@ def encodeIPv4(ip_addr_string):
 
 def decodeIPv4(encoded_ip_addr):
     return socket.inet_ntoa(encoded_ip_addr)
+
+twz_id_pattern = re.compile('^([\da-fA-F]{2}:){15}([\da-fA-F]{2})$')
+def matchesTwzId(twz_id_string):
+    return twz_id_pattern.match(twz_id_string) is not None
+
+def encodeTwzId(twz_id_string):
+    return twz_id_string.replace(':', '').decode('hex')
+
+def decodeTwzId(encoded_twz_id):
+    return ':'.join(s.encode('hex') for s in encoded_twz_id)
 
 def bitwidthToBytes(bitwidth):
     return int(math.ceil(bitwidth / 8.0))
@@ -68,6 +79,8 @@ def encode(x, bitwidth):
             encoded_bytes = encodeMac(x)
         elif matchesIPv4(x):
             encoded_bytes = encodeIPv4(x)
+        elif matchesTwzId(x):
+            encoded_bytes = encodeTwzId(x)
         else:
             # Assume that the string is already encoded
             encoded_bytes = x

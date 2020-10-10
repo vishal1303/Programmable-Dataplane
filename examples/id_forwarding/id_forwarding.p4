@@ -8,11 +8,16 @@
 
 typedef bit<9> egressSpec_t;
 typedef bit<48> macAddr_t;
+typedef bit<128> objectId_t;
 
 header ethernet_t {
     macAddr_t dstAddr;
     macAddr_t srcAddr;
     bit<16> etherType;
+}
+
+header twizzler_t {
+    objectId_t objectId;
 }
 
 struct metadata {
@@ -21,6 +26,7 @@ struct metadata {
 
 struct headers {
     ethernet_t ethernet;
+    twizzler_t twizzler;
 }
 
 
@@ -34,7 +40,18 @@ parser MyParser(packet_in packet,
                 inout standard_metadata_t standard_metadata) {
 
     state start {
+        transition parse_ethernet;
+    }
+
+    state parse_ethernet {
         packet.extract(hdr.ethernet);
+        transition select(hdr.ethernet.etherType) {
+            0x0700: parse_twizzler;
+        }
+    }
+
+    state parse_twizzler {
+        packet.extract(hdr.twizzler);
         transition accept;
     }
 }
@@ -65,26 +82,26 @@ control MyIngress(inout headers hdr,
         standard_metadata.mcast_grp = 1;
     }
 
-    action mac_forward(egressSpec_t egress_port) {
+    action id_forward(egressSpec_t egress_port) {
         standard_metadata.egress_spec = egress_port;
     }
 
     table fwd_table {
         key = {
-            hdr.ethernet.dstAddr: exact;
+            hdr.twizzler.objectId: exact;
         }
 
         actions = {
             drop;
             broadcast;
-            mac_forward;
+            id_forward;
         }
         size = 1024;
         default_action = broadcast();
     }
 
     apply {
-        if (hdr.ethernet.isValid()) {
+        if (hdr.ethernet.isValid() && hdr.twizzler.isValid()) {
             fwd_table.apply();
         }
     }
@@ -127,6 +144,7 @@ control MyDeparser(packet_out packet, in headers hdr) {
     apply {
         //parsed headers have to be added again into the packet.
         packet.emit(hdr.ethernet);
+        packet.emit(hdr.twizzler);
     }
 }
 
