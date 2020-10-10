@@ -1,6 +1,6 @@
 # ID Forwarding
 
-In this example we implement L2 forwarding in P4 using custom ids. The hosts are Twizzler VMs. Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on custom ids. The hosts are Twizzler VMs. Below is the network topology used in this example:
 
 ![pod-topo](https://github.com/vishal1303/Programmable-DataPlane/blob/master/examples/id_forwarding/pod-topo/pod-topo.png)
 
