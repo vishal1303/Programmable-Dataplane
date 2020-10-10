@@ -1,8 +1,26 @@
 # MAC Forwarding
 
-In this example we implement L2 forwarding in P4 using mac addresses. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on mac addresses. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
 
-![pod-topo](https://github.com/vishal1303/Programmable-DataPlane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
+![pod-topo](https://github.com/vishal1303/Programmable-Dataplane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
+
+## Note
+
+To work with linux bridges, add the following lines to the file `/etc/sysctl.conf`
+```shell
+net.bridge.bridge-nf-call-arptables = 0
+net.bridge.bridge-nf-call-iptables = 0
+net.bridge.bridge-nf-call-ip6tables = 0
+```
+Then run the following command
+```shell
+$ sudo sysctl -p
+```
+
+These settings ensure that the packets traversing the bridge are not sent to host iptables for processing.
+
+**Note:** These settings might not persist after a rebbot. So re-run `sudo sysctl -p` after a reboot.
+
 
 ## Using mininet hosts
 
