@@ -27,7 +27,7 @@ Next, go through the following steps:
 
 3. Log in as the user p4 and copy the files `environment/root-bootstrap.sh` and `environment/user-bootstrap.sh` into your home folder `/home/p4/`
 
-4. Go inside your home folder `/home/p4` and run
+4. Go inside your home folder `/home/p4/` and run
 ```shell
 sudo ./root-bootstrap.sh
 ./user-bootstrap.sh
