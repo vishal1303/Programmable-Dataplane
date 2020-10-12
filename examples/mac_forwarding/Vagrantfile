@@ -21,6 +21,9 @@ Vagrant.configure("2") do |config|
 
       # Customize the amount of memory on the VM:
       vb.memory = "2048"
+    
+      # Default NIC type
+      vb.default_nic_type = "82543GC" #Intel PRO/1000 T Server (supports DPDK)
   end
 
   config.vm.define "vm1" do |vm1|
