@@ -53,6 +53,8 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 ### Inside Twizzler VMs
 
+**Note:** This is a work-in-progress!
+
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
 2. Run connectivity tests inside each VM using the following command,
@@ -60,5 +62,3 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 $ network <host ip address> twz
 ```
 This will set the IP address of the host VM to `host ip address` and start sending twizzler packets with custom object ids in the packet header. The mapping of object ids to VMs is currently hard-coded.
-
-**Note:** This is a work-in-progress!
