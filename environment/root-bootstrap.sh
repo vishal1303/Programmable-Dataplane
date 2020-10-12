@@ -70,3 +70,12 @@ apt-get install -y --no-install-recommends --fix-missing\
   xcscope-el \
   xterm
 
+##Installing Vagrant
+
+#Remove an existing installation
+sudo apt-get remove --auto-remove vagrant
+rm -r ~/.vagrant.d
+
+#Download the .deb package and install
+wget https://releases.hashicorp.com/vagrant/2.0.4/vagrant_2.0.4_x86_64.deb
+sudo dpkg -i vagrant_2.0.4_x86_64.deb
