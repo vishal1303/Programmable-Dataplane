@@ -46,7 +46,7 @@ $ ./create_vms.sh [linux/twizzler]
 ```
 If `linux` option is selected, this will start 4 Virtualbox VMs (the setup has also been tested and works with Qemu-KVM vms). Instead, if `twizzler` option is selected, this will start 4 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system). It will then connect the VMs to the mininet network via the tap interfaces as shown in the diagram above.
 
-4. [For twizzler VMs] Before running Step 3, make sure you have the following 4 commands running in 4 separate terminals,
+4. **[For twizzler VMs]** Before running Step 3, make sure you have the following 4 commands running in 4 separate terminals,
 ```shell
 $ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
 $ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
