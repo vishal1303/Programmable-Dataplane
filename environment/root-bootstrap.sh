@@ -14,10 +14,12 @@ apt-get install -y --no-install-recommends --fix-missing\
   autoconf \
   automake \
   bison \
+  bridge-utils \
   build-essential \
   ca-certificates \
   cmake \
   cpp \
+  cpu-checker \
   curl \
   flex \
   git \
@@ -45,6 +47,8 @@ apt-get install -y --no-install-recommends --fix-missing\
   libreadline6-dev \
   libssl-dev \
   libtool \
+  libvirt-bin \
+  libvirt-dev \
   linux-headers-$KERNEL\
   llvm \
   lubuntu-desktop \
@@ -59,13 +63,11 @@ apt-get install -y --no-install-recommends --fix-missing\
   python-scapy \
   python-setuptools \
   qemu-kvm \
-  libvirt-bin \
-  virtinst \
-  bridge-utils \
-  cpu-checker \
   tcpdump \
+  ubuntu-vm-builder \
   unzip \
   vim \
+  virtinst \
   virtualbox \
   wget \
   wireshark \
@@ -73,14 +75,12 @@ apt-get install -y --no-install-recommends --fix-missing\
   xterm
 
 ##Installing Vagrant
-
 #Remove an existing installation
 sudo apt-get remove --auto-remove vagrant
 FILE=/home/p4/.vagrant.d
 if [ -f "$FILE" ]; then
   rm -r $FILE
 fi
-
 #Download the .deb package and install
 wget https://releases.hashicorp.com/vagrant/2.0.4/vagrant_2.0.4_x86_64.deb
 sudo dpkg -i vagrant_2.0.4_x86_64.deb
