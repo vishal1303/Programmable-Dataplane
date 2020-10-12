@@ -93,6 +93,8 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 
 ### Inside Twizzler VMs
 
+**Note:** This is a work in progress!
+
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
 2. Run connectivity tests inside each VM using the following command,
@@ -100,5 +102,3 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 $ network <host ip address> ipv4 <dst ip address>
 ```
 This will set the IP address of the host VM to `host ip address` and start sending IPV4 packets from the host VM to the destination VM
-
-**Note:** This is a work in progress!
