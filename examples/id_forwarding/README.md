@@ -53,7 +53,7 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 ### Inside Twizzler VMs
 
-**Note:** This is a work-in-progress!
+**Note:** This is a work in progress!
 
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
