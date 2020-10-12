@@ -24,9 +24,12 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 
 ## Using mininet hosts
 
-1. Change the line 2 in `Makefile` to `TOPO = pod-topo/topology-with-hosts.json`
+1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-hosts.json`
 
-2. `sudo make run` This will start the mininet netowrk and return a mininet CLI
+2. Run the following command to start the mininet network
+```shell
+$ sudo make run
+```
 
 3. To exit, type `exit` in mininet CLI, followed by `sudo make clean`
 
