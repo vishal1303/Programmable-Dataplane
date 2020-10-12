@@ -30,7 +30,7 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 
 3. To exit, type `exit` in mininet CLI, followed by `sudo make clean`
 
-## Using virtual machines (VMs)
+## Using virtual machines (VMs) as hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
@@ -60,11 +60,11 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 ## Running Experiments
 
-### Mininet hosts
+### Inside Mininet hosts
 
 Refer to mininet documentation [https://github.com/mininet/mininet/wiki/Documentation] for instructions on how to run various experiments.
 
-### Linux VMs
+### Inside Linux VMs
 
 1. Access the linux VMs using the following commands:
 ```shell
@@ -91,7 +91,7 @@ id       name        provider       state   directory
 ```
 Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vagrant destroy`
 
-## Twizzler VMs
+## Inside Twizzler VMs
 
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
