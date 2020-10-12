@@ -76,7 +76,10 @@ apt-get install -y --no-install-recommends --fix-missing\
 
 #Remove an existing installation
 sudo apt-get remove --auto-remove vagrant
-rm -r ~/.vagrant.d
+FILE=/home/p4/.vagrant.d
+if [ -f "$FILE" ]; then
+  rm -r $FILE
+fi
 
 #Download the .deb package and install
 wget https://releases.hashicorp.com/vagrant/2.0.4/vagrant_2.0.4_x86_64.deb
