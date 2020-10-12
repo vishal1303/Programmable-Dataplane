@@ -65,6 +65,7 @@ apt-get install -y --no-install-recommends --fix-missing\
   cpu-checker \
   tcpdump \
   unzip \
+  vim \
   virtualbox \
   wget \
   wireshark \
