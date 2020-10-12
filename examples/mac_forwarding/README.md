@@ -91,7 +91,7 @@ id       name        provider       state   directory
 ```
 Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vagrant destroy`
 
-## Inside Twizzler VMs
+### Inside Twizzler VMs
 
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
