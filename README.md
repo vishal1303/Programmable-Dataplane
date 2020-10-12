@@ -5,7 +5,7 @@ mininet.
 
 ## Environment setup
 
-The setup assumes that you are running on an Ubuntu 16.04 machine with gcc version 5.
+The setup assumes that you are running on an 64-bit Ubuntu 16.04 machine with gcc version 5.
 
 To check gcc version, run `gcc --version`
 
