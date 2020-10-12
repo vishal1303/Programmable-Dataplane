@@ -21,12 +21,42 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 
 **Note:** These settings might not persist after a rebbot. So re-run `sudo sysctl -p` after a reboot.
 
-## Using Twizzler VMs
+## Using Twizzler VMs as hosts
 
-1. Ensure the line 2 in `Makefile` is `TOPO = pod-topo/topology-with-vms.json`
+1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
-2. `sudo make run` This will start the mininet netowrk and return a mininet CLI
+2. Run the following command to start the mininet network
+```shell
+$ sudo make run
+```
 
-3. In a separate terminal, run `./create_taps.sh` followed by `./create_vms.sh`. This will start 4 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system). It will then connect the VMs to the mininet network via the tap interfaces as shown in the diagram above.
+3. In a separate terminal, run 
+```shell
+$ ./create_taps.sh
+$ ./create_vms.sh
+```
+This will start 4 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system) and connect them to the mininet network via the tap interfaces as shown in the diagram above.
 
-4. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
+4. Before running Step 3, make sure you have the following 4 commands running in 4 separate terminals,
+```shell
+$ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_2.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_3.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
+```
+
+5. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
+
+**Tip:** To add new formats for match field entries, look into /home/vshrivastav/Programmable-Dataplane/utils/p4runtime_lib/convert.py
+
+## Running Experiments
+
+## Inside Twizzler VMs
+
+1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
+
+2. Run connectivity tests inside each VM using the following command,
+```shell
+$ network <host ip address> twz
+```
+This will set the IP address of the host VM to `host ip address` and start sending twizzler packets with custom object ids in the packet header. The mapping of object ids to VMs is currently hard-coded. This is a work-in-progress!
