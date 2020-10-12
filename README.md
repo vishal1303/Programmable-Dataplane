@@ -11,9 +11,9 @@ To check gcc version, run `gcc --version`
 
 To install gcc 5, run
 ```shell
-sudo apt install g++-5 gcc-5
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 2 --slave /usr/bin/g++ g++ /usr/bin/g++-5
-sudo update-alternatives --config gcc
+$ sudo apt install g++-5 gcc-5
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 2 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+$ sudo update-alternatives --config gcc
 ```
 Then select gcc-5 as the default compiler.
 
@@ -29,6 +29,6 @@ Next, go through the following steps:
 
 4. Go inside your home folder `/home/p4/` and run
 ```shell
-sudo ./root-bootstrap.sh
-./user-bootstrap.sh
+$ sudo ./root-bootstrap.sh
+$ ./user-bootstrap.sh
 ```
