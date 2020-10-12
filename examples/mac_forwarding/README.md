@@ -49,9 +49,9 @@ If `linux` option is selected, this will start 4 Virtualbox VMs (the setup has a
 4. **[For twizzler VMs]** Before running Step 3, make sure you have the following 4 commands running in 4 separate terminals,
 ```shell
 $ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
-$ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
-$ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
-$ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_2.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_3.sock,fork -,cfmakeraw
+$ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 ```
 
 5. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
