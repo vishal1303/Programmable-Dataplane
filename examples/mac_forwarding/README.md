@@ -100,3 +100,5 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 $ network <host ip address> ipv4 <dst ip address>
 ```
 This will set the IP address of the host VM to `host ip address` and start sending IPV4 packets from the host VM to the destination VM
+
+**Note:** This is a work in progress!
