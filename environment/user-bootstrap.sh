@@ -115,7 +115,7 @@ cd ../..
 
 # --- Tutorials --- #
 sudo pip install crcmod
-git clone https://github.com/vishal1303/tutorials.git
+git clone https://github.com/vishal1303/Programmable-Dataplane.git
 
 sudo chown -R p4:p4 .
 
