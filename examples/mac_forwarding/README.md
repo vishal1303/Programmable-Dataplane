@@ -1,6 +1,6 @@
 # MAC Forwarding
 
-In this example we implement packet forwarding in P4 based on mac addresses. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on destination mac address. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
 
 ![pod-topo](https://github.com/vishal1303/Programmable-Dataplane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
 
