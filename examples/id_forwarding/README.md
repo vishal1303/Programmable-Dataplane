@@ -1,6 +1,6 @@
 # ID Forwarding
 
-In this example we implement packet forwarding in P4 based on custom ids. The hosts are Twizzler VMs. Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on either destination mac address or custom id. The default forwarding is done based on the destination mac address in the Ethernet header. However, if the packet contains a custom header containing a custom id, then forwarding is done based on the custom id. The hosts are Twizzler VMs. Below is the network topology used in this example:
 
 ![pod-topo](https://github.com/vishal1303/Programmable-Dataplane/blob/master/examples/id_forwarding/pod-topo/pod-topo.png)
 
@@ -57,8 +57,12 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
-2. Run connectivity tests inside each VM using the following command,
+2. Run connectivity tests inside each VM using the following commands,
+```shell
+$ network <host ip address> ipv4 <dst ip address>
+```
+The above command tests the mac forwarding
 ```shell
 $ network <host ip address> twz <dst ip address>
 ```
-This will set the IP address of the host VM to `host ip address` and start sending twizzler packets with custom object ids in the packet header. The mapping of object ids to VMs is currently hard-coded.
+The above command tests the custom id forwarding
