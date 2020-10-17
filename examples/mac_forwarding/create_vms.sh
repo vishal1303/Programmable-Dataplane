@@ -12,13 +12,7 @@ if [[ $opt = "linux" ]]
 then
     echo "Starting 4 linux VMs.."
     sudo vagrant up
-#    qemu-system-x86_64 -m 1024 -cdrom ~/Downloads/archlinux.iso -boot d -netdev tap,id=net0,ifname=b1-tap1,script=no,downscript=no -device e1000,netdev=net0,mac='08:00:00:00:01:11' -name vm1 -daemonize
-#
-#    qemu-system-x86_64 -m 1024 -cdrom ~/Downloads/archlinux.iso -boot d -netdev tap,id=net0,ifname=b2-tap1,script=no,downscript=no -device e1000,netdev=net0,mac='08:00:00:00:02:22' -name vm2 -daemonize
-#
-#    qemu-system-x86_64 -m 1024 -cdrom ~/Downloads/archlinux.iso -boot d -netdev tap,id=net0,ifname=b3-tap1,script=no,downscript=no -device e1000,netdev=net0,mac='08:00:00:00:03:33' -name vm3 -daemonize
-#
-#    qemu-system-x86_64 -m 1024 -cdrom ~/Downloads/archlinux.iso -boot d -netdev tap,id=net0,ifname=b4-tap1,script=no,downscript=no -device e1000,netdev=net0,mac='08:00:00:00:04:44' -name vm4 -daemonize
+    #qemu-system-x86_64 -m 1024 -cdrom ~/Downloads/archlinux.iso -boot d -netdev tap,id=net0,ifname=b1-tap1,script=no,downscript=no -device e1000,netdev=net0,mac='08:00:00:00:01:11' -name vm1 -daemonize
 
 elif [[ $opt = "twizzler" ]]
 then
