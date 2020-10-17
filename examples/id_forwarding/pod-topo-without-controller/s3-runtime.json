@@ -1,10 +1,10 @@
 {
   "target": "bmv2",
-  "p4info": "build/mac_forwarding.p4.p4info.txt",
-  "bmv2_json": "build/mac_forwarding.json",
+  "p4info": "build/id_forwarding.p4.p4info.txt",
+  "bmv2_json": "build/id_forwarding.json",
   "table_entries": [
     {
-      "table": "MyIngress.fwd_table",
+      "table": "fwd_table",
       "default_action": true,
       "action_name": "MyIngress.broadcast",
       "action_params": { }
@@ -12,17 +12,9 @@
     {
       "table": "MyIngress.fwd_table",
       "match": {
-        "hdr.ethernet.dstAddr": "FF:FF:FF:FF:FF:FF"
+        "hdr.twizzler.objectId": "08:00:00:00:01:11:08:00:00:00:01:11:08:00:00:00"
       },
-      "action_name": "MyIngress.broadcast",
-      "action_params": { }
-    },
-    {
-      "table": "MyIngress.fwd_table",
-      "match": {
-        "hdr.ethernet.dstAddr": "08:00:00:00:01:11"
-      },
-      "action_name": "MyIngress.mac_forward",
+      "action_name": "MyIngress.id_forward",
       "action_params": {
         "egress_port": 1
       }
@@ -30,9 +22,9 @@
     {
       "table": "MyIngress.fwd_table",
       "match": {
-        "hdr.ethernet.dstAddr": "08:00:00:00:02:22"
+        "hdr.twizzler.objectId": "08:00:00:00:02:22:08:00:00:00:02:22:08:00:00:00"
       },
-      "action_name": "MyIngress.mac_forward",
+      "action_name": "MyIngress.id_forward",
       "action_params": {
         "egress_port": 2
       }
@@ -40,21 +32,21 @@
     {
       "table": "MyIngress.fwd_table",
       "match": {
-        "hdr.ethernet.dstAddr": "08:00:00:00:03:33"
+        "hdr.twizzler.objectId": "08:00:00:00:03:33:08:00:00:00:03:33:08:00:00:00"
       },
-      "action_name": "MyIngress.mac_forward",
+      "action_name": "MyIngress.id_forward",
       "action_params": {
-        "egress_port": 3
+        "egress_port": 2
       }
     },
     {
       "table": "MyIngress.fwd_table",
       "match": {
-        "hdr.ethernet.dstAddr": "08:00:00:00:04:44"
+        "hdr.twizzler.objectId": "08:00:00:00:04:44:08:00:00:00:04:44:08:00:00:00"
       },
-      "action_name": "MyIngress.mac_forward",
+      "action_name": "MyIngress.id_forward",
       "action_params": {
-        "egress_port": 4
+        "egress_port": 1
       }
     }
   ],
@@ -68,10 +60,6 @@
         },
         {
           "egress_port" : 2,
-          "instance" : 1
-        },
-        {
-          "egress_port" : 4,
           "instance" : 1
         }
       ]

@@ -161,8 +161,8 @@ class ExerciseRunner:
             return str(l) + "ms"
 
 
-    def __init__(self, topo_file, log_dir, pcap_dir,
-                       switch_json, bmv2_exe='simple_switch', quiet=False):
+    def __init__(self, topo_file=None, log_dir=None, pcap_dir=None,
+                       switch_json=None, bmv2_exe='simple_switch', quiet=False):
         """ Initializes some attributes and reads the topology json. Does not
             actually run the exercise. Use run_exercise() for that.
 
@@ -177,23 +177,24 @@ class ExerciseRunner:
         """
 
         self.quiet = quiet
-        self.logger('Reading topology file.')
-        with open(topo_file, 'r') as f:
-            topo = json.load(f)
-        self.hosts = topo['hosts']
-        self.switches = topo['switches']
-        self.links = self.parse_links(topo['links'])
+        if topo_file != None:
+            self.logger('Reading topology file.')
+            with open(topo_file, 'r') as f:
+                topo = json.load(f)
+            self.hosts = topo['hosts']
+            self.switches = topo['switches']
+            self.links = self.parse_links(topo['links'])
 
-        # Ensure all the needed directories exist and are directories
-        for dir_name in [log_dir, pcap_dir]:
-            if not os.path.isdir(dir_name):
-                if os.path.exists(dir_name):
-                    raise Exception("'%s' exists and is not a directory!" % dir_name)
-                os.mkdir(dir_name)
-        self.log_dir = log_dir
-        self.pcap_dir = pcap_dir
-        self.switch_json = switch_json
-        self.bmv2_exe = bmv2_exe
+            # Ensure all the needed directories exist and are directories
+            for dir_name in [log_dir, pcap_dir]:
+                if not os.path.isdir(dir_name):
+                    if os.path.exists(dir_name):
+                        raise Exception("'%s' exists and is not a directory!" % dir_name)
+                    os.mkdir(dir_name)
+            self.log_dir = log_dir
+            self.pcap_dir = pcap_dir
+            self.switch_json = switch_json
+            self.bmv2_exe = bmv2_exe
 
 
     def run_exercise(self):
@@ -269,23 +270,55 @@ class ExerciseRunner:
                       switch = defaultSwitchClass,
                       controller = None)
 
-    def program_switch_p4runtime(self, sw_name, sw_dict):
+    def program_switch_p4runtime(self, sw_name, sw_dict, opcode, entry):
         """ This method will use P4Runtime to program the switch using the
             content of the runtime JSON file as input.
         """
-        sw_obj = self.net.get(sw_name)
-        grpc_port = sw_obj.grpc_port
-        device_id = sw_obj.device_id
-        runtime_json = sw_dict['runtime_json']
-        self.logger('Configuring switch %s using P4Runtime with file %s' % (sw_name, runtime_json))
-        with open(runtime_json, 'r') as sw_conf_file:
+        grpc_port = None
+        device_id = None
+        outfile = None
+        if opcode == 0:
+            sw_obj = self.net.get(sw_name)
+            grpc_port = sw_obj.grpc_port
+            device_id = sw_obj.device_id
             outfile = '%s/%s-p4runtime-requests.txt' %(self.log_dir, sw_name)
+            f = open(os.getcwd()+"/build/"+sw_name+"-conf.txt", "w")
+            f.write(str(grpc_port))
+            f.write("\n")
+            f.write(str(device_id))
+            f.write("\n")
+            f.write(outfile)
+            f.close()
+        else:
+            f = open(os.getcwd()+"/build/"+sw_name+"-conf.txt", "r")
+            count = 0
+            for line in f:
+                if count == 0:
+                    grpc_port = int(line)
+                elif count == 1:
+                    device_id = int(line)
+                elif count == 2:
+                    outfile = line
+                count += 1
+            f.close()
+        runtime_json = sw_dict['runtime_json']
+        if opcode == 0:
+            self.logger('Configuring switch %s using P4Runtime with file %s' % (sw_name, runtime_json))
+        elif opcode == 1:
+            self.logger('Configuring switch %s with a new table entry' % sw_name)
+        elif opcode == 2:
+            self.logger('Configuring switch %s with a new group entry' % sw_name)
+        else:
+            raise Exception("Should not be here; wrong opcode for program_switch")
+        with open(runtime_json, 'r') as sw_conf_file:
             p4runtime_lib.simple_controller.program_switch(
                 addr='127.0.0.1:%d' % grpc_port,
                 device_id=device_id,
                 sw_conf_file=sw_conf_file,
                 workdir=os.getcwd(),
-                proto_dump_fpath=outfile)
+                proto_dump_fpath=outfile,
+                opcode=opcode,
+                entry=entry)
 
     def program_switch_cli(self, sw_name, sw_dict):
         """ This method will start up the CLI and use the contents of the
@@ -313,7 +346,7 @@ class ExerciseRunner:
             if 'cli_input' in sw_dict:
                 self.program_switch_cli(sw_name, sw_dict)
             if 'runtime_json' in sw_dict:
-                self.program_switch_p4runtime(sw_name, sw_dict)
+                self.program_switch_p4runtime(sw_name, sw_dict, 0, None)
 
     def program_hosts(self):
         """ Execute any commands provided in the topology.json file on each Mininet host

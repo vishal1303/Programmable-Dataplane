@@ -88,7 +88,7 @@ def check_switch_conf(sw_conf, workdir):
             raise ConfException("file does not exist %s" % real_path)
 
 
-def program_switch(addr, device_id, sw_conf_file, workdir, proto_dump_fpath):
+def program_switch(addr, device_id, sw_conf_file, workdir, proto_dump_fpath, opcode, entry):
     sw_conf = json_load_byteified(sw_conf_file)
     try:
         check_switch_conf(sw_conf=sw_conf, workdir=workdir)
@@ -114,26 +114,39 @@ def program_switch(addr, device_id, sw_conf_file, workdir, proto_dump_fpath):
         sw.MasterArbitrationUpdate()
 
         if target == "bmv2":
-            info("Setting pipeline config (%s)..." % sw_conf['bmv2_json'])
-            bmv2_json_fpath = os.path.join(workdir, sw_conf['bmv2_json'])
-            sw.SetForwardingPipelineConfig(p4info=p4info_helper.p4info,
-                                           bmv2_json_file_path=bmv2_json_fpath)
+            if opcode == 0:
+                info("Setting pipeline config (%s)..." % sw_conf['bmv2_json'])
+                bmv2_json_fpath = os.path.join(workdir, sw_conf['bmv2_json'])
+                sw.SetForwardingPipelineConfig(p4info=p4info_helper.p4info,
+                                               bmv2_json_file_path=bmv2_json_fpath)
         else:
-            raise Exception("Should not be here")
+            raise Exception("Should not be here; target is not bmv2")
 
-        if 'table_entries' in sw_conf:
-            table_entries = sw_conf['table_entries']
-            info("Inserting %d table entries..." % len(table_entries))
-            for entry in table_entries:
-                info(tableEntryToString(entry))
-                insertTableEntry(sw, entry, p4info_helper)
+        if opcode == 0:
+            if 'table_entries' in sw_conf:
+                table_entries = sw_conf['table_entries']
+                info("Inserting %d table entries..." % len(table_entries))
+                for entry in table_entries:
+                    info(tableEntryToString(entry))
+                    insertTableEntry(sw, entry, p4info_helper)
 
-        if 'multicast_group_entries' in sw_conf:
-            group_entries = sw_conf['multicast_group_entries']
-            info("Inserting %d group entries..." % len(group_entries))
-            for entry in group_entries:
-                info(groupEntryToString(entry))
-                insertMulticastGroupEntry(sw, entry, p4info_helper)
+            if 'multicast_group_entries' in sw_conf:
+                group_entries = sw_conf['multicast_group_entries']
+                info("Inserting %d group entries..." % len(group_entries))
+                for entry in group_entries:
+                    info(groupEntryToString(entry))
+                    insertMulticastGroupEntry(sw, entry, p4info_helper)
+        elif opcode == 1:
+            info("Inserting a new table entry...")
+            info(tableEntryToString(entry))
+            insertTableEntry(sw, entry, p4info_helper)
+        elif opcode == 2:
+            info("Inserting a new group entry...")
+            info(tableEntryToString(entry))
+            insertMulticastGroupEntry(sw, entry, p4info_helper)
+        else:
+            raise Exception("Should not be here; wrong opcode for program_switch")
+
 
     finally:
         sw.shutdown()

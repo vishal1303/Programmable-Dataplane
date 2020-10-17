@@ -48,6 +48,7 @@ parser MyParser(packet_in packet,
         packet.extract(hdr.ethernet);
         transition select(hdr.ethernet.etherType) {
             0x0700: parse_twizzler;
+            default: accept;
         }
     }
 
@@ -83,11 +84,29 @@ control MyIngress(inout headers hdr,
         standard_metadata.mcast_grp = 1;
     }
 
+    action mac_forward(egressSpec_t egress_port) {
+        standard_metadata.egress_spec = egress_port;
+    }
+
     action id_forward(egressSpec_t egress_port) {
         standard_metadata.egress_spec = egress_port;
     }
 
-    table fwd_table {
+    table mac_table {
+        key = {
+            hdr.ethernet.dstAddr: exact;
+        }
+
+        actions = {
+            drop;
+            broadcast;
+            mac_forward;
+        }
+        size = 1024;
+        default_action = broadcast();
+    }
+
+    table id_table {
         key = {
             hdr.twizzler.objectId: exact;
         }
@@ -102,8 +121,14 @@ control MyIngress(inout headers hdr,
     }
 
     apply {
-        if (hdr.ethernet.isValid() && hdr.twizzler.isValid()) {
-            fwd_table.apply();
+        if (hdr.ethernet.isValid()) {
+            if (hdr.ethernet.etherType == 0x0700) {
+                if (hdr.twizzler.isValid()) {
+                    id_table.apply();
+                }
+            } else {
+                mac_table.apply();
+            }
         }
     }
 }

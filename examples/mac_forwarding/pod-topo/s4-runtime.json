@@ -4,7 +4,7 @@
   "bmv2_json": "build/mac_forwarding.json",
   "table_entries": [
     {
-      "table": "fwd_table",
+      "table": "MyIngress.fwd_table",
       "default_action": true,
       "action_name": "MyIngress.broadcast",
       "action_params": { }
