@@ -59,6 +59,6 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 2. Run connectivity tests inside each VM using the following command,
 ```shell
-$ network <host ip address> twz
+$ network <host ip address> twz <dst ip address>
 ```
 This will set the IP address of the host VM to `host ip address` and start sending twizzler packets with custom object ids in the packet header. The mapping of object ids to VMs is currently hard-coded.
