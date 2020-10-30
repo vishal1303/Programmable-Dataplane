@@ -87,13 +87,13 @@ $ ./controller_client eth2
 
 **Note:** This is a work in progress!
 
-1. To access twizzler VMs, go to the terminals started in Step 0
+1. To access Twizzler VMs, go to the terminals started in Step 0
 
 2. Run the follwong command inside each VM,
 ```shell
 $ network <host ip address> <host broadcast ip address> twz [0/1]
 ```
-e.g., in VM3 run
+e.g., inside VM3 run
 ```shell
 network 10.0.0.3 10.0.0.255 twz 0
 ```
