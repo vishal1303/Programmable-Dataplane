@@ -21,8 +21,9 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 
 **Note:** These settings might not persist after a rebbot. So re-run `sudo sysctl -p` after a reboot.
 
+## Starting up the network
 
-## Using mininet hosts
+### Using mininet hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-hosts.json`
 
@@ -33,7 +34,7 @@ $ sudo make run
 
 3. To exit, type `exit` in mininet CLI, followed by `sudo make clean`
 
-## Using virtual machines (VMs) as hosts
+### Using virtual machines (VMs) as hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
@@ -49,7 +50,7 @@ $ ./create_vms.sh [linux/twizzler]
 ```
 If `linux` option is selected, this will start 4 Virtualbox VMs (the setup has also been tested and works with Qemu-KVM VMs). Instead, if `twizzler` option is selected, this will start 4 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system). It will then connect the VMs to the mininet network via the tap interfaces as shown in the diagram above.
 
-4. **[For twizzler VMs]** Before running Step 3, make sure you have the following 4 commands running in 4 separate terminals,
+4. **[For twizzler VMs]** Before running Step 3, open four separate terminals and cd into the twizzler directory. Then run the following commands (one in each terminal)
 ```shell
 $ sudo socat UNIX-LISTEN:twz_serial_1.sock,fork -,cfmakeraw
 $ sudo socat UNIX-LISTEN:twz_serial_2.sock,fork -,cfmakeraw
@@ -57,7 +58,7 @@ $ sudo socat UNIX-LISTEN:twz_serial_3.sock,fork -,cfmakeraw
 $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 ```
 
-5. To exit, type `exit` in mininet CLI, followed by `./clean.sh`
+5. To shutdown the network, type `exit` in the terminal running mininet CLI, followed by `./clean.sh`
 
 **Tip:** To add new formats for match field entries, look into /home/vshrivastav/Programmable-Dataplane/utils/p4runtime_lib/convert.py
 
@@ -103,5 +104,9 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 2. Run connectivity tests using the following command inside each VM,
 ```shell
 $ network <host ip address> <host broadcast ip address> udp <dst ip address> <src port> <dst port>
+```
+e.g., inside VM3 run
+```shell
+network 10.0.0.3 10.0.0.255 udp 10.0.0.1 3004 3005
 ```
 This will set the IP and broadcast address of the host VM to `host ip address` and `host broadcast ip address` respectively. Then it will start sending UDP packets from the host VM to the destination VM
