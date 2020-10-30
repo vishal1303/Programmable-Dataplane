@@ -27,7 +27,7 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 
 ## Starting up the network
 
-### Using mininet hosts
+### With mininet hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-hosts.json`
 
@@ -38,7 +38,7 @@ $ sudo make run
 
 3. To shutdown the network, type `exit` in the terminal running mininet CLI, followed by `sudo make clean`
 
-### Using VMs as hosts
+### With VMs as hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
@@ -68,11 +68,11 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 ## Running Experiments
 
-### Inside mininet hosts
+### With mininet hosts
 
 Refer to mininet documentation [https://github.com/mininet/mininet/wiki/Documentation] for instructions on how to run various experiments.
 
-### Inside linux VMs
+### With linux VMs
 
 1. Access the linux VMs using the following commands:
 ```shell
@@ -99,7 +99,7 @@ id       name        provider       state   directory
 ```
 Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vagrant destroy`
 
-### Inside twizzler VMs
+### With twizzler VMs
 
 **Note:** This is a work in progress!
 
