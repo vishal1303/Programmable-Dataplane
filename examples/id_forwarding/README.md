@@ -1,6 +1,6 @@
 # ID Forwarding
 
-In this example we implement packet forwarding in P4 based on either destination mac address or a custom id. The default forwarding is done based on the destination mac address in the Ethernet header. However, if the destination mac address of a packet is set to broadcast and the packet also contains a custom header (twizzler header) with a custom id, then forwarding is done based on the custom id. Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on either destination mac address or a custom id. The default forwarding is done based on the destination mac address in the Ethernet header. However, if the destination mac address of a packet is set to broadcast and the packet also contains a custom header (twizzler header) with a custom id, then forwarding is done based on the custom id. The default forwarding action is broadcast. Below is the network topology used in this example:
 
 ![pod-topo](https://github.com/vishal1303/Programmable-Dataplane/blob/master/examples/id_forwarding/pod-topo/pod-topo.png)
 
