@@ -82,7 +82,7 @@ $ ./controller_client eth2
 8. To shutdown the network,
   - Type `exit` in the terminal running mininet CLI, followed by `./clean.sh` 
   - Next, shutdown the linux VM by running `shutdown -h now`
-  - All other terminals can be terminated by simply pressing `cntrl+C`
+  - All other terminals can be terminated by simply pressing `cntrl + C`
 
 
 ## Running Experiments
