@@ -92,10 +92,10 @@ $ ./controller_client eth2
 
 2. Run the follwong command inside each VM,
 ```shell
-$ network <host ip address> <host broadcast ip address> twz [0/1]
+$ network <host_ip_address> <broadcast_ip_address> twz [0/1]
 ```
 e.g., inside VM3 run
 ```shell
 network 10.0.0.3 10.0.0.255 twz 0
 ```
-This will set the IP and broadcast address of the host VM to `host ip address` and `host broadcast ip address` respectively. Option 0 will run a controller-based resource discovery protocol, while option 1 will run an end-to-end resource discovery protocol.
+This will set the IP and broadcast address of the host VM to `host_ip_address` and `broadcast_ip_address` respectively. Option 0 will run a controller-based resource discovery protocol, while option 1 will run an end-to-end resource discovery protocol.
