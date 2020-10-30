@@ -103,10 +103,10 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 
 2. Run connectivity tests using the following command inside each VM,
 ```shell
-$ network <host ip address> <host broadcast ip address> udp <dst ip address> <src port> <dst port>
+$ network <host_ip_address> <broadcast_ip_address> udp <dst_ip_address> <src_port> <dst_port>
 ```
 e.g., inside VM3 run
 ```shell
 network 10.0.0.3 10.0.0.255 udp 10.0.0.1 3004 3005
 ```
-This will set the IP and broadcast address of the host VM to `host ip address` and `host broadcast ip address` respectively. Then it will start sending UDP packets from the host VM to the destination VM
+This will set the IP and broadcast address of the host VM to `host_ip_address` and `broadcast_ip_address` respectively. Then it will start sending UDP packets from the host VM to the destination VM
