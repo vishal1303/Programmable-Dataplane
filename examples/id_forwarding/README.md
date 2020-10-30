@@ -72,7 +72,7 @@ $ ./run_controller.sh
 ```
 When prompted for `root@localhost's password:` enter **root**
 
-7. Finally, start the controller client inside VM4 by running the following command,
+7. Finally, start the controller client inside vm4 by running the following command,
 ```shell
 $ ./controller_client eth2
 ```
