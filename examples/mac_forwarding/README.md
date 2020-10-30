@@ -1,6 +1,10 @@
 # MAC Forwarding
 
-In this example we implement packet forwarding in P4 based on destination mac address. The hosts can either be mininet hosts or virtual machines (VMs). Below is the network topology used in this example:
+In this example we implement packet forwarding in P4 based on destination mac address. The default forwarding action is broadcast. The forwarding logic is implemented in `mac_forwarding.p4`.
+
+## Hosts
+
+The hosts in the network can either be mininet hosts (which are simply different linux namespaces) or they can be VMs. Below is the network topology used in this example comprising 4 VMs. Note that if we use the mininet hosts instead of VMs, we don't need the linux bridges, and the hosts are directly connected to the switches.
 
 ![pod-topo](https://github.com/vishal1303/Programmable-Dataplane/blob/master/examples/mac_forwarding/pod-topo/pod-topo.png)
 
@@ -34,7 +38,7 @@ $ sudo make run
 
 3. To shutdown the network, type `exit` in the terminal running mininet CLI, followed by `sudo make clean`
 
-### Using virtual machines (VMs) as hosts
+### Using VMs as hosts
 
 1. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
@@ -48,7 +52,7 @@ $ sudo make run
 $ ./create_taps.sh
 $ ./create_vms.sh [linux/twizzler]
 ```
-If `linux` option is selected, this will start 4 Virtualbox VMs (the setup has also been tested and works with Qemu-KVM VMs). Instead, if `twizzler` option is selected, this will start 4 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system). It will then connect the VMs to the mininet network via the tap interfaces as shown in the diagram above.
+If `linux` option is selected, this will start 4 virtualbox VMs (the setup has also been tested and works with qemu-KVM VMs). Instead, if `twizzler` option is selected, this will start 4 twizzler VMs (remember to modify the script with the location of the twizzler folder on your system). It will then connect the VMs to the mininet network via the tap interfaces as shown in the diagram above.
 
 4. **[For twizzler VMs]** Before running Step 3, open four separate terminals and cd into the twizzler directory. Then run the following commands (one in each terminal)
 ```shell
@@ -68,7 +72,7 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 Refer to mininet documentation [https://github.com/mininet/mininet/wiki/Documentation] for instructions on how to run various experiments.
 
-### Inside Linux VMs
+### Inside linux VMs
 
 1. Access the linux VMs using the following commands:
 ```shell
@@ -95,17 +99,17 @@ id       name        provider       state   directory
 ```
 Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vagrant destroy`
 
-### Inside Twizzler VMs
+### Inside twizzler VMs
 
 **Note:** This is a work in progress!
 
-1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
+1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using VMs as hosts**
 
 2. Run connectivity tests using the following command inside each VM,
 ```shell
 $ network <host_ip_address> <broadcast_ip_address> udp <dst_ip_address> <src_port> <dst_port>
 ```
-e.g., inside VM3 run
+e.g., inside vm3 run
 ```shell
 network 10.0.0.3 10.0.0.255 udp 10.0.0.1 3004 3005
 ```
