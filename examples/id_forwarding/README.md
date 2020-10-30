@@ -6,11 +6,11 @@ In this example we implement packet forwarding in P4 based on either destination
 
 ## Hosts
 
-The hosts in the network are Twizzler VMs. In this example, there are 3 hosts (VM1-VM3).
+The hosts in the network are twizzler VMs. In this example, there are 3 hosts (vm1-vm3).
 
 ## Controller
 
-The network controller comprises a Linux VM (VM4) running `controller/controller_client.c` which receives control messages from the Twizzler VMs over the mininet network, and relays those control messages to the controller server code (`controller/controller_server.py`) running on the host machine. The controller server then configures all the switches in the mininet network.
+The network controller comprises a linux VM (vm4) running `controller/controller_client.c` which receives control messages from the twizzler VMs over the mininet network, and relays those control messages to the controller server code (`controller/controller_server.py`) running on the host machine. The controller server then configures all the switches in the mininet network.
 
 ## Note
 
@@ -42,7 +42,8 @@ $ sudo socat UNIX-LISTEN:twz_serial_3.sock,fork -,cfmakeraw
 ```shell
 $ cd Programmable-Dataplane/examples/id_forwarding
 ```
-Inside this directory, first download the `images` folder from [here](https://drive.google.com/drive/folders/1QlC_Rd6sf64L5HsCGGKyChDBhqVFNzkd?usp=sharing). This folder contains the Linux VM image for VM4.
+Inside this directory, first download the `images` folder from [here](https://drive.google.com/drive/folders/1QlC_Rd6sf64L5HsCGGKyChDBhqVFNzkd?usp=sharing). This folder contains the linux VM image for vm4.
+
 **Important:** Make sure the folder name is `images` and it has two files `images/bzImage` and `images/wheezy.img`
 
 2. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
@@ -57,13 +58,13 @@ $ sudo make run
 $ ./create_taps.sh
 $ ./create_vms.sh twizzler
 ```
-This will start 3 Twizzler VMs (remember to modify the script with the location of the twizzler folder on your system) and connect them to the mininet network via the tap interfaces as shown in the diagram above.
+This will start 3 twizzler VMs (remember to modify the script with the location of the twizzler folder on your system) and connect them to the mininet network via the tap interfaces as shown in the diagram above.
 
 5. Next, in a separate terminal, run
 ```shell
 $ ./create_vms.sh linux
 ```
-This will start the Linux VM acting as the network controller. Login credentials: username **root** password **root**
+This will start the linux VM acting as the network controller. Login credentials: username **root** password **root**
 
 6. Next, start the controller server in a separate terminal
 ```
@@ -80,7 +81,7 @@ $ ./controller_client eth2
 
 8. To shutdown the network,
   - Type `exit` in the terminal running mininet CLI, followed by `./clean.sh` 
-  - Next, shutdown the Linux VM by running `shutdown -h now`
+  - Next, shutdown the linux VM by running `shutdown -h now`
   - All other terminals can be terminated by simply pressing `cntrl+C`
 
 
@@ -88,13 +89,13 @@ $ ./controller_client eth2
 
 **Note:** This is a work in progress!
 
-1. To access Twizzler VMs, go to the terminals started in Step 0
+1. To access twizzler VMs, go to the terminals started in Step 0
 
 2. Run the follwong command inside each VM,
 ```shell
 $ network <host_ip_address> <broadcast_ip_address> twz [0/1]
 ```
-e.g., inside VM3 run
+e.g., inside vm3 run
 ```shell
 network 10.0.0.3 10.0.0.255 twz 0
 ```
