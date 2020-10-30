@@ -42,7 +42,8 @@ $ sudo socat UNIX-LISTEN:twz_serial_3.sock,fork -,cfmakeraw
 ```shell
 $ cd Programmable-Dataplane/examples/id_forwarding
 ```
-Inside this directory, first download the `images` folder from [here](https://drive.google.com/drive/folders/1QlC_Rd6sf64L5HsCGGKyChDBhqVFNzkd?usp=sharing). This folder contains the Linux VM image for VM4. 
+Inside this directory, first download the `images` folder from [here](https://drive.google.com/drive/folders/1QlC_Rd6sf64L5HsCGGKyChDBhqVFNzkd?usp=sharing). This folder contains the Linux VM image for VM4.
+**Important:** Make sure the folder name is `images` and it has two files `images/bzImage` and `images/wheezy.img`
 
 2. Check the line 2 in `Makefile` is set to `TOPO = pod-topo/topology-with-vms.json`
 
