@@ -76,6 +76,7 @@ When prompted for `root@localhost's password:` enter **root**
 ```shell
 $ ./controller_client eth2
 ```
+This opens up a raw socket to receive control messages from twizzler VMs, and relays it to the controller server (on host) via a UDP socket
 
 **At this point, the network should be up and running!!**
 
