@@ -18,6 +18,7 @@ header ethernet_t {
 
 header twizzler_t {
     objectId_t objectId;
+    bit<8> twzOp;
     bit<16> twzType;
 }
 
