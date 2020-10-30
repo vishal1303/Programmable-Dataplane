@@ -68,7 +68,7 @@ $ sudo socat UNIX-LISTEN:twz_serial_4.sock,fork -,cfmakeraw
 
 ## Running Experiments
 
-### Inside Mininet hosts
+### Inside mininet hosts
 
 Refer to mininet documentation [https://github.com/mininet/mininet/wiki/Documentation] for instructions on how to run various experiments.
 
