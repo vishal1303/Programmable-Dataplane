@@ -31,3 +31,6 @@ logs/
 
 # IntelliJ / PyCharm
 .idea/
+
+# images folder
+images*/
