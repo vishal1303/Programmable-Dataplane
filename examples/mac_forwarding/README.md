@@ -77,7 +77,7 @@ $ sudo vagrant ssh vm3
 $ sudo vagrant ssh vm4
 ```
 
-2. Run connectivity tests inside each VM, e.g., inside vm3 run
+2. Run connectivity tests by running the `ping` command inside each VM, e.g., inside vm3 run
 ```shell
 $ ping 10.0.0.1
 ```
@@ -100,8 +100,8 @@ Then use the VM id instead of VM name as the argument for `vagrant ssh` and `vag
 
 1. To access twizzler VMs, go to the terminals started in Step 4 in the above section **Using virtual machines (VMs)**
 
-2. Run connectivity tests inside each VM using the following command,
+2. Run connectivity tests using the following command inside each VM,
 ```shell
-$ network <host ip address> ipv4 <dst ip address>
+$ network <host ip address> <host broadcast ip address> udp <dst ip address> <src port> <dst port>
 ```
-This will set the IP address of the host VM to `host ip address` and start sending IPV4 packets from the host VM to the destination VM
+This will set the IP and broadcast address of the host VM to `host ip address` and `host broadcast ip address` respectively. Then, it will start sending UDP packets from the host VM to the destination VM
