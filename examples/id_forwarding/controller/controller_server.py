@@ -44,22 +44,22 @@ def insert_table_entry(msg):
     machine_addr = ""
     object_id = ""
     count = 0
-    assert(len(msg) == 44)
+    assert(len(msg) == 45)
     for c in msg:
-        if count < 10:
-            if count % 2 == 0:
-                machine_addr += c
-            else:
-                machine_addr += c + ":"
-        elif count == 10 or count == 11:
-            machine_addr += c
-        elif count > 11 and count < 42:
+        if count < 30:
             if count % 2 == 0:
                 object_id += c
             else:
                 object_id += c + ":"
-        elif count == 42 or count == 43:
+        elif count == 30 or count == 31:
             object_id += c
+        elif count > 31 and count < 42:
+            if count % 2 == 0:
+                machine_addr += c
+            else:
+                machine_addr += c + ":"
+        elif count == 42 or count == 43:
+            machine_addr += c
         count += 1
 
     for sw in sw_names:
@@ -73,8 +73,7 @@ def insert_table_entry(msg):
             "egress_port": mac_table[sw][machine_addr]
           }
         }
-        run_exercise.ExerciseRunner().program_switch_p4runtime
-        (sw, sw_json_files[sw], 1, entry)
+        run_exercise.ExerciseRunner().program_switch_p4runtime(sw, sw_json_files[sw], 1, entry)
 
 
 #create a UDP socket
@@ -85,12 +84,13 @@ server_address = ('localhost', 10000)
 print >>sys.stderr, 'starting up controller on %s port %s' % server_address
 sock.bind(server_address)
 
+#receive message
+print >>sys.stderr, '\nReady to receive message..'
+
 while True:
-    #receive message
-    print >>sys.stderr, '\nwaiting to receive message'
     msg, address = sock.recvfrom(4096)
 
-    #insert_table_entry(msg)
+    print >>sys.stderr, '\nReceived %s bytes from %s msg = %s' % (len(msg), address, msg)
 
-    print >>sys.stderr, 'received %s bytes from %s' % (len(msg), address)
-    print >>sys.stderr, msg
+    insert_table_entry(msg)
+

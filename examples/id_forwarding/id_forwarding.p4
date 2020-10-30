@@ -122,7 +122,8 @@ control MyIngress(inout headers hdr,
 
     apply {
         if (hdr.ethernet.isValid()) {
-            if (hdr.ethernet.etherType == 0x0700) {
+            if (hdr.ethernet.etherType == 0x0700
+            && hdr.ethernet.dstAddr == 0xFFFFFFFFFFFF) {
                 if (hdr.twizzler.isValid()) {
                     id_table.apply();
                 }
