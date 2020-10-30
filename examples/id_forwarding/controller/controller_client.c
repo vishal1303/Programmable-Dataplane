@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     int raw_sock;
     struct sockaddr_ll addr;
 
-	if ((raw_sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) < 0) {
+    if ((raw_sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) < 0) {
         perror("raw socket");
         exit(1);
     }
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
     }
 
     //bind to the interface
-	addr.sll_family = AF_PACKET;
+    addr.sll_family = AF_PACKET;
     addr.sll_protocol = htons(ETH_P_ALL);
     addr.sll_ifindex = ifr.ifr_ifindex;
 
@@ -90,25 +90,25 @@ int main(int argc, char* argv[])
         exit(1);
     }
 
-	//create a UDP socket to send the message to controller server on host machine
-	int udp_sock;
-	struct sockaddr_in servaddr;
+    //create a UDP socket to send the message to controller server on host machine
+    int udp_sock;
+    struct sockaddr_in servaddr;
 
-	if ((udp_sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+    if ((udp_sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
         perror("udp socket");
         exit(1);
     }
 
-	bzero(&servaddr, sizeof(servaddr));
+    bzero(&servaddr, sizeof(servaddr));
 
-	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = inet_addr(CONTROLLER_SERVER_ADDR);
-	servaddr.sin_port = htons(CONTROLLER_SERVER_PORT);
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = inet_addr(CONTROLLER_SERVER_ADDR);
+    servaddr.sin_port = htons(CONTROLLER_SERVER_PORT);
 
     //receive message
     fprintf(stdout, "\nReady to receive message..\n\n");
 
-	while (1) {
+    while (1) {
         uint8_t* msg = (uint8_t *)malloc(sizeof(uint8_t)*MSG_SIZE);
         uint8_t* p = msg;
 
@@ -158,17 +158,17 @@ int main(int argc, char* argv[])
                 ip_hdr->src_ip[0], ip_hdr->src_ip[1], ip_hdr->src_ip[2],
                 ip_hdr->src_ip[3], ntohs(udp_hdr->src_port), msg);
 
-		//send message
+        //send message
         sendto(udp_sock, msg, strlen(msg),
             MSG_CONFIRM, (const struct sockaddr *)&servaddr, sizeof(servaddr));
         printf("Sent message: %s\n\n", msg);
 
         free(p);
-	}
+    }
 
-	//close sockets
+    //close sockets
     close(raw_sock);
-	close(udp_sock);
+    close(udp_sock);
 
     return 0;
 }
