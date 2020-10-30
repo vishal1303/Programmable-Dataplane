@@ -32,7 +32,7 @@ These settings ensure that the packets traversing the bridge are not sent to hos
 $ sudo make run
 ```
 
-3. To exit, type `exit` in mininet CLI, followed by `sudo make clean`
+3. To shutdown the network, type `exit` in the terminal running mininet CLI, followed by `sudo make clean`
 
 ### Using virtual machines (VMs) as hosts
 
