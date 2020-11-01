@@ -72,11 +72,13 @@ $ ./run_controller.sh
 ```
 When prompted for `root@localhost's password:` enter **root**
 
+This configures the controller VM (vm4) and starts the controller server (`controller/controller_server.py`) on the host machine
+
 7. Finally, start the controller client inside vm4 by running the following command,
 ```shell
 $ ./controller_client eth2
 ```
-This opens up a raw socket to receive control messages from twizzler VMs, and relays it to the controller server (on host) via a UDP socket
+This opens up a raw socket on vm4 and binds it to the interface `eth2` (connected to the mininet network) to receive control messages from twizzler VMs. It then relays those messages to the controller server (on host) over the interface `eth0` via a UDP socket
 
 **At this point, the network should be up and running!!**
 
