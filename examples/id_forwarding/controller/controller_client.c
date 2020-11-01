@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
     servaddr.sin_port = htons(CONTROLLER_SERVER_PORT);
 
     //receive message
-    fprintf(stdout, "\nReady to receive message..\n\n");
+    fprintf(stderr, "\nReady to receive message..\n\n");
 
     while (1) {
         uint8_t* msg = (uint8_t *)malloc(sizeof(uint8_t)*MSG_SIZE);
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
         //parse Ethernet
         eth_hdr_t* eth_hdr = (eth_hdr_t *)msg;
         if (ntohs(eth_hdr->type) != 0x0800) {
-            //fprintf(stdout, "Received Ethernet packet of type 0x%04X; "
+            //fprintf(stderr, "Received Ethernet packet of type 0x%04X; "
             //        "packet dropped\n", ntohs(eth_hdr->type));
             free(p);
             continue;
@@ -133,7 +133,7 @@ int main(int argc, char* argv[])
         ip_hdr_t* ip_hdr = (ip_hdr_t *)msg;
         uint8_t ihl = (ip_hdr->ver_and_ihl & 0b00001111) * 4; //in bytes
         if (ip_hdr->protocol != 0x11) {
-            //fprintf(stdout, "Received IPV4 packet of type 0x%02X; "
+            //fprintf(stderr, "Received IPV4 packet of type 0x%02X; "
             //        "packet dropped\n", ip_hdr->protocol);
             assert(msg != NULL);
             free(p);
@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
         udp_hdr_t* udp_hdr = (udp_hdr_t *)msg;
         if (ntohs(udp_hdr->src_port) != TWIZZLER_PORT
         || ntohs(udp_hdr->dst_port) != CONTROLLER_PORT) {
-            //fprintf(stdout, "Received UDP packet from port %d -> %d; "
+            //fprintf(stderr, "Received UDP packet from port %d -> %d; "
             //        "packet dropped\n", ntohs(udp_hdr->src_port),
             //        ntohs(udp_hdr->dst_port));
             free(p);
@@ -154,14 +154,14 @@ int main(int argc, char* argv[])
 
         //extract message
         msg += UDP_HDR_SIZE;
-        printf("Received UDP packet from ('%d.%d.%d.%d', %d) msg = %s\n",
+        fprintf(stderr, "Received UDP pkt from ('%d.%d.%d.%d', %d) msg = %s\n",
                 ip_hdr->src_ip[0], ip_hdr->src_ip[1], ip_hdr->src_ip[2],
                 ip_hdr->src_ip[3], ntohs(udp_hdr->src_port), msg);
 
         //send message
         sendto(udp_sock, msg, strlen(msg),
             MSG_CONFIRM, (const struct sockaddr *)&servaddr, sizeof(servaddr));
-        printf("Sent message: %s\n\n", msg);
+        fprintf(stderr, "Sent message: %s\n\n", msg);
 
         free(p);
     }
