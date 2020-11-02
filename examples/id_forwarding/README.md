@@ -102,4 +102,4 @@ e.g., inside vm3 run
 ```shell
 network 10.0.0.3 10.0.0.255 twz 0
 ```
-This will set the IP and broadcast address of the host VM to `host_ip_address` and `broadcast_ip_address` respectively. Option 0 will run a controller-based resource discovery protocol, while option 1 will run an end-to-end resource discovery protocol.
+This will set the IP and broadcast address of the host VM to `host_ip_address` and `broadcast_ip_address` respectively. Option 0 will run a controller-based resource discovery protocol, while option 1 will run an end-to-end resource discovery protocol
