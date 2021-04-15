@@ -48,13 +48,13 @@ parser MyParser(packet_in packet,
     state parse_ethernet {
         packet.extract(hdr.ethernet);
         transition select(hdr.ethernet.etherType) {
-            0x0700: parse_twizzler;
+            0x0800: parse_ip;
             default: accept;
         }
     }
 
-    state parse_twizzler {
-        packet.extract(hdr.twizzler);
+    state parse_ip {
+        packet.extract(hdr.ip);
         transition accept;
     }
 }
